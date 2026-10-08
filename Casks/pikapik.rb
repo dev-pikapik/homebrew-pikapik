@@ -1,6 +1,6 @@
 cask "pikapik" do
-  version "1.26.2"
-  sha256 "c61092326c24c5b4fb9ed20022345bfae779f9b6834818b1a5beb1d1f25cb715"
+  version "1.27.0"
+  sha256 "dc589fe41a49726fc16649a00501134f556cefa42b034361fc551c2375521667"
 
   url "https://github.com/dev-pikapik/pikapik/releases/download/v#{version}/pikapik.zip"
   name "pikapik"
@@ -14,15 +14,30 @@ cask "pikapik" do
 
   postflight_steps do
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/pikapik.app"], must_succeed: false
+    remove "{{appdir}}/pikapik.app", recursive: true
   end
 
   uninstall_preflight_steps do
     run "{{appdir}}/pikapik.app/Contents/MacOS/pikapik", args: ["--uninstall"], must_succeed: false
   end
 
+  uninstall_postflight_steps do
+    remove "{{appdir}}/pikapik.app", recursive: true
+  end
+
   uninstall quit: "com.pikapik.app.direct"
 
-  zap trash: "~/Library/Preferences/com.pikapik.app.direct.plist"
+  zap trash: [
+    "~/Library/Application Scripts/com.pikapik.app.direct.compress",
+    "~/Library/Application Scripts/com.pikapik.app.direct.convert",
+    "~/Library/Application Scripts/com.pikapik.app.direct.new-file",
+    "~/Library/Caches/com.pikapik.app.direct",
+    "~/Library/Containers/com.pikapik.app.direct.compress",
+    "~/Library/Containers/com.pikapik.app.direct.convert",
+    "~/Library/Containers/com.pikapik.app.direct.new-file",
+    "~/Library/HTTPStorages/com.pikapik.app.direct",
+    "~/Library/Preferences/com.pikapik.app.direct.plist",
+  ]
 
   caveats <<~EOS
     pikapik needs two permissions in System Settings › Privacy & Security:
