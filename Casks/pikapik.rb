@@ -1,6 +1,6 @@
 cask "pikapik" do
-  version "1.32.1"
-  sha256 "c68c764eacd9625a43952a736286c8b96895a25cf00051db9d065ee9cd9519c2"
+  version "1.32.2"
+  sha256 "6ccbebec39fae35a1e2bcce77080324b921f62efdc995cb5ed608e9fcefbfdf8"
 
   url "https://github.com/dev-pikapik/pikapik/releases/download/v#{version}/pikapik.zip"
   name "pikapik"
@@ -27,7 +27,12 @@ cask "pikapik" do
 
   uninstall quit: "com.pikapik.app.direct"
 
-  zap trash: [
+  zap launchctl: "com.pikapik.app.direct.fans",
+      delete:    [
+        "/Library/LaunchDaemons/com.pikapik.app.direct.fans.plist",
+        "/Library/PrivilegedHelperTools/com.pikapik.app.direct.fans",
+      ],
+      trash:     [
     "~/Library/Application Scripts/com.pikapik.app.direct.compress",
     "~/Library/Application Scripts/com.pikapik.app.direct.convert",
     "~/Library/Application Scripts/com.pikapik.app.direct.new-file",
