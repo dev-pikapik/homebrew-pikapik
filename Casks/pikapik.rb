@@ -1,6 +1,6 @@
 cask "pikapik" do
-  version "1.37.3"
-  sha256 "a91d38fc290113ff86a993e4ea320280fac8758e137126992c05c8c14d02d3cb"
+  version "1.38.0"
+  sha256 "bf3c51bf975bcc012bd49a1ce0ae1d6639a0acff235cb15b71b5fc9d0c50a5f5"
 
   url "https://github.com/dev-pikapik/pikapik/releases/download/v#{version}/pikapik.zip"
   name "pikapik"
@@ -33,13 +33,17 @@ cask "pikapik" do
         "/Library/PrivilegedHelperTools/com.pikapik.app.direct.fans",
       ],
       trash:     [
+    "~/Library/Application Scripts/com.pikapik.app.direct.archive",
     "~/Library/Application Scripts/com.pikapik.app.direct.compress",
     "~/Library/Application Scripts/com.pikapik.app.direct.convert",
     "~/Library/Application Scripts/com.pikapik.app.direct.new-file",
+    "~/Library/Application Scripts/com.pikapik.app.direct.preview",
     "~/Library/Caches/com.pikapik.app.direct",
+    "~/Library/Containers/com.pikapik.app.direct.archive",
     "~/Library/Containers/com.pikapik.app.direct.compress",
     "~/Library/Containers/com.pikapik.app.direct.convert",
     "~/Library/Containers/com.pikapik.app.direct.new-file",
+    "~/Library/Containers/com.pikapik.app.direct.preview",
     "~/Library/HTTPStorages/com.pikapik.app.direct",
     "~/Library/Preferences/com.pikapik.app.direct.plist",
   ]
