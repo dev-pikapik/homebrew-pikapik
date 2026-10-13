@@ -1,6 +1,6 @@
 cask "pikapik" do
-  version "1.40.2"
-  sha256 "4977942f0a626844364b7f48724af46c0106c3333ab30a71d90b0cc9a97e6883"
+  version "1.41.0"
+  sha256 "c8b0643f4eec0cf123bad6bb1732aee4d58174fb8d6754423072bb92c2796fb1"
 
   url "https://github.com/dev-pikapik/pikapik/releases/download/v#{version}/pikapik.zip"
   name "pikapik"
@@ -17,15 +17,16 @@ cask "pikapik" do
     remove "{{appdir}}/pikapik.app", recursive: true
   end
 
-  uninstall_preflight_steps do
-    run "{{appdir}}/pikapik.app/Contents/MacOS/pikapik", args: ["--uninstall"], must_succeed: false
-  end
-
   uninstall_postflight_steps do
     remove "{{appdir}}/pikapik.app", recursive: true
   end
 
-  uninstall quit: "com.pikapik.app.direct"
+  uninstall quit:   "com.pikapik.app.direct",
+            script: {
+              executable:   "/usr/bin/env",
+              args:         ["#{appdir}/pikapik.app/Contents/MacOS/pikapik", "--uninstall"],
+              must_succeed: false,
+            }
 
   zap launchctl: "com.pikapik.app.direct.fans",
       delete:    [
