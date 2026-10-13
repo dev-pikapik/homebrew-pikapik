@@ -1,6 +1,6 @@
 cask "pikapik" do
-  version "1.44.2"
-  sha256 "fd9c8697debde65091938afe71da24b9e0fc8a8b5a56f9fcfda877d7cae7e2e6"
+  version "1.44.3"
+  sha256 "314e6264ee4a329d962fa2d8a2df91a9eea99fd68eb4c04917694dddc97f517e"
 
   url "https://github.com/dev-pikapik/pikapik/releases/download/v#{version}/pikapik.zip"
   name "pikapik"
