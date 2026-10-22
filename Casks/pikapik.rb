@@ -1,6 +1,6 @@
 cask "pikapik" do
-  version "1.55.1"
-  sha256 "58e777b9798a4b259e0d3b96b5cfe661a320bde507d0ee1e4a3c5ba88f8638f7"
+  version "1.56.0"
+  sha256 "3711b4271c72b5c57a697bb0eb28607cc6ac0d857f1a1d954a9aaaa4c24c71fe"
 
   url "https://github.com/dev-pikapik/pikapik/releases/download/v#{version}/pikapik.zip"
   name "pikapik"
@@ -14,11 +14,6 @@ cask "pikapik" do
 
   postflight_steps do
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/pikapik.app"], must_succeed: false
-    remove "{{appdir}}/pikapik.app", recursive: true
-  end
-
-  uninstall_postflight_steps do
-    remove "{{appdir}}/pikapik.app", recursive: true
   end
 
   uninstall quit:   "com.pikapik.app.direct",
