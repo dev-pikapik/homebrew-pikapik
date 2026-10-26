@@ -1,6 +1,6 @@
 cask "pikapik" do
-  version "1.56.1"
-  sha256 "dde8794e716a33c63b28d9828116c48b95b3567f40228b0a97cd7ea87fe487af"
+  version "1.56.2"
+  sha256 "cd0b130624c6c259865d1256b06f0ac28318dd521e306b5dc8f5a0239a4ea855"
 
   url "https://github.com/dev-pikapik/pikapik/releases/download/v#{version}/pikapik.zip"
   name "pikapik"
@@ -24,9 +24,17 @@ cask "pikapik" do
             }
 
   zap launchctl: "com.pikapik.app.direct.fans",
+      script:    {
+        executable:   "/bin/bash",
+        args:         ["-c", 'f=/Library/PrivilegedHelperTools/com.pikapik.app.direct.fans; [ ! -e "$f.turned-off" ] || { "$f" --restore >/dev/null 2>&1 & p=$!; (sleep 30; kill $p) >/dev/null 2>&1 & w=$!; wait $p; kill $w 2>/dev/null; }'],
+        sudo:         true,
+        must_succeed: false,
+      },
       delete:    [
         "/Library/LaunchDaemons/com.pikapik.app.direct.fans.plist",
         "/Library/PrivilegedHelperTools/com.pikapik.app.direct.fans",
+        "/Library/PrivilegedHelperTools/com.pikapik.app.direct.fans.new",
+        "/Library/PrivilegedHelperTools/com.pikapik.app.direct.fans.turned-off",
       ],
       trash:     [
     "~/Library/Application Scripts/com.pikapik.app.direct.archive",
@@ -46,8 +54,9 @@ cask "pikapik" do
   ]
 
   caveats <<~EOS
-    pikapik needs two permissions in System Settings › Privacy & Security:
-      Accessibility and Input Monitoring
-    The app opens a window that walks you through them.
+    Tools that change keys, clicks or windows need two permissions in
+    System Settings › Privacy & Security: Accessibility (Device Control
+    and Data Access on macOS 27) and Input Monitoring.
+    Settings › Permissions in pikapik shows which tools use them.
   EOS
 end
