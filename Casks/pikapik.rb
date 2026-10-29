@@ -1,6 +1,6 @@
 cask "pikapik" do
-  version "1.58.0"
-  sha256 "04860107e22055a4630eceb821340f14d7aeab78d16928d354b77a2b0a595c59"
+  version "1.58.1"
+  sha256 "d83795d1298ad838c8d9fd80466d2085a488c4c1ff27910a7f21919b92314d92"
 
   url "https://github.com/dev-pikapik/pikapik/releases/download/v#{version}/pikapik.zip"
   name "pikapik"
@@ -26,7 +26,7 @@ cask "pikapik" do
   zap launchctl: "com.pikapik.app.direct.fans",
       script:    {
         executable:   "/bin/bash",
-        args:         ["-c", 'f=/Library/PrivilegedHelperTools/com.pikapik.app.direct.fans; [ ! -e "$f.turned-off" ] || { "$f" --restore >/dev/null 2>&1 & p=$!; (sleep 30; kill $p) >/dev/null 2>&1 & w=$!; wait $p; kill $w 2>/dev/null; }; d=/Library/Displays; for f in "$d"/Contents/Resources/Overrides/DisplayVendorID-*/DisplayProductID-*; do [ -f "$f" ] && [ ! -L "$f" ] && /usr/bin/grep -q "<key>pikapik</key>" "$f" && /bin/rm -f "$f"; done; /bin/rmdir "$d"/Contents/Resources/Overrides/DisplayVendorID-* "$d"/Contents/Resources/Overrides "$d"/Contents/Resources "$d"/Contents "$d" 2>/dev/null; true'],
+        args:         ["-c", 'f=/Library/PrivilegedHelperTools/com.pikapik.app.direct.fans; [ ! -e "$f.turned-off" ] || { "$f" --restore >/dev/null 2>&1 & p=$!; (sleep 30; kill $p) >/dev/null 2>&1 & w=$!; wait $p; kill $w 2>/dev/null; }; d=/Library/Displays; for f in "$d"/Contents/Resources/Overrides/DisplayVendorID-*/DisplayProductID-*; do [ -f "$f" ] && [ ! -L "$f" ] && [ ! -L "${f%/*}" ] && [ "$(/usr/bin/stat -f %u "$f")" = 0 ] && [ "$(/usr/bin/plutil -extract pikapik raw -o - "$f" 2>/dev/null)" = true ] && /bin/rm -f "$f"; done; /bin/rmdir "$d"/Contents/Resources/Overrides/DisplayVendorID-* "$d"/Contents/Resources/Overrides "$d"/Contents/Resources "$d"/Contents "$d" 2>/dev/null; true'],
         sudo:         true,
         must_succeed: false,
       },
